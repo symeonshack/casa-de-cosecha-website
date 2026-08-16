@@ -42,9 +42,22 @@ drop the `assets/originals/` line from `.gitignore` and consider Git LFS.
 Resolution is deliberate, not arbitrary. The product illustrations stay at their
 native 1408x768 because the card crops to the centre square — that discards 45%
 of the width, so the panel only gets ~2.1x pixel density at desktop size and
-there is no room to shrink them. The logo is the one asset with real headroom
-(it was 5x oversized) and is downsampled to 800px wide. Quality is 92 for the
-illustrations, 96 for the logo, which has type in it and shows ringing sooner.
+there is no room to shrink them. They are encoded lossy at quality 92.
+
+The logo is handled differently, because it is flat-colour art with hard edges
+rather than a watercolour scan, and lossy encoding puts visible ringing along
+those edges. It is quantized to 256 colours and then encoded **lossless**, which
+came out both smaller and cleaner than lossy at the same width (60 KB at 46.6 dB,
+versus 123 KB at 31.6 dB for lossy quality 96). It is served at 800px wide, 3.0x
+the 264px it occupies in the hero, its largest appearance.
+
+Two things to preserve when replacing the logo:
+
+- **Trim the transparent padding first.** The CSS sizes the mark by its box, so
+  padding inside the file shrinks the mark everywhere it appears. The master that
+  produced the current file was 2000x2000 with the mark filling only 39% of it.
+- One file, `images/logo-mark.webp`, serves the header, hero and footer. Keeping
+  its 1.14 aspect ratio makes a swap a drop-in with no layout change.
 
 If you swap in a new illustration, check the crop still clears the subject:
 the square panel shows only the middle 768px of the source, and the 4/3 mobile
