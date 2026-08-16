@@ -1,0 +1,279 @@
+/* Casa de Cosecha — site styles.
+
+   Shared by every page. Loaded as an external stylesheet rather than inlined so
+   the shop/cart/contact pages don't each carry their own copy, and so a repeat
+   visitor navigating between pages gets it from cache.
+
+   Contents, in source order:
+     Tokens & base      colour variables, resets, type scale
+     Patterns           botanical wallpaper, scallop divider
+     Nav / Hero
+     Story              the arch and its illustration
+     Products           the card grid and illustration panels
+     Quote / Ethos
+     Footer
+     Breakpoints        860px (grids collapse), 520px (hero eyebrow)
+*/
+
+:root{
+  --cream:#F6E4C4;
+  --paper:#FBF2DE;
+  --orange:#DE511B;
+  --orange-dark:#B93F14;
+  --brick:#8A2A1B;
+  --navy:#1C2A47;
+  --gold:#F2A93A;
+  --leaf:#4B6B3A;
+  --ink:#241408;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Poppins', sans-serif;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Rye', serif; font-weight:400; letter-spacing:0.5px; line-height:1.05;}
+.script{font-family:'Kaushan Script', cursive; font-weight:400;}
+.label{
+  font-family:'Oswald', sans-serif;
+  font-weight:600;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  font-size:13px;
+}
+a{color:inherit; text-decoration:none;}
+img{max-width:100%; display:block;}
+
+/* ---------- SVG wallpaper pattern (placeholder botanical) ---------- */
+.botanical-strip{
+  background-color:var(--paper);
+  background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%23DE511B' stroke-width='2.5'%3E%3Ccircle cx='40' cy='40' r='9'/%3E%3Cpath d='M40 31 C 34 22, 22 22, 20 32 C 18 42, 30 46, 40 40 C 50 46, 62 42, 60 32 C 58 22, 46 22, 40 31 Z'/%3E%3Cpath d='M40 20 L40 60 M22 40 L58 40' stroke='%23F2A93A' stroke-width='1.5'/%3E%3Cpath d='M130 120 q -18 -30 -40 -14 q 6 26 40 14z' fill='%234B6B3A' stroke='none' opacity='0.85'/%3E%3Cpath d='M110 96 q -6 -18 -22 -16' stroke='%234B6B3A'/%3E%3Cellipse cx='150' cy='60' rx='14' ry='14' fill='%23F2A93A' opacity='0.9' stroke='%23B93F14'/%3E%3Cpath d='M150 46 L150 74 M136 60 L164 60' stroke='%231C2A47' stroke-width='1.2'/%3E%3Cpath d='M20 140 q10 -22 30 -10 q -4 22 -30 10z' fill='%23DE511B' opacity='0.15'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:130px 130px;
+}
+
+/* ---------- Scalloped arch divider (echoes logo rind arch) ---------- */
+.scallop{
+  width:100%;
+  height:34px;
+  display:block;
+}
+.scallop-down{ transform: rotate(180deg); }
+
+/* ---------- Nav ---------- */
+header{
+  position:sticky; top:0; z-index:50;
+  background:var(--cream);
+  border-bottom:3px solid var(--ink);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 5%;
+}
+.nav-mark{display:flex; align-items:center; gap:12px;}
+.nav-mark img{height:42px; width:auto;}
+.nav-mark span{font-family:'Rye'; font-size:20px; color:var(--brick);}
+nav ul{display:flex; gap:34px; list-style:none;}
+nav a{ font-family:'Oswald'; font-weight:600; letter-spacing:2px; font-size:13px; text-transform:uppercase; color:var(--ink); border-bottom:2px solid transparent; padding-bottom:4px; transition:.2s;}
+nav a:hover{border-color:var(--orange); color:var(--orange-dark);}
+.nav-cta{
+  background:var(--orange); color:var(--paper); padding:10px 22px; border-radius:2px;
+  font-family:'Oswald'; font-weight:700; letter-spacing:2px; font-size:12px; text-transform:uppercase;
+  box-shadow:3px 3px 0 var(--ink);
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;
+  background:var(--cream);
+  padding:90px 5% 60px;
+  text-align:center;
+  overflow:hidden;
+}
+
+.hero-inner{position:relative; z-index:2; max-width:840px; margin:0 auto;}
+
+/* Logo mark on a citrus-crate sunburst. Rays radiate in every direction, so
+   unlike a disc there's no silhouette to mismatch against the arch-shaped mark.
+   Uses logo-mark.webp (trimmed of its transparent padding) so the width below
+   is the width you actually see. */
+.hero-logo-wrap{
+  position:relative;
+  width:clamp(190px, 27vw, 264px);
+  margin:0 auto 34px;
+}
+/* Radiant point sits on the flat edge of the citrus slice, so the mark reads
+   as a sun rising out of the burst rather than a badge pasted over it. */
+.hero-logo-wrap::before{
+  content:"";
+  position:absolute; left:50%; top:47%;
+  width:225%; aspect-ratio:1/1;
+  transform:translate(-50%,-50%);
+  background:repeating-conic-gradient(from 3deg at 50% 50%,
+    var(--gold) 0deg 5.5deg, transparent 5.5deg 15deg);
+  -webkit-mask-image:radial-gradient(closest-side, #000 20%, rgba(0,0,0,0.5) 46%, transparent 68%);
+  mask-image:radial-gradient(closest-side, #000 20%, rgba(0,0,0,0.5) 46%, transparent 68%);
+  opacity:0.5;
+  pointer-events:none;
+}
+.hero img.hero-logo{position:relative; width:100%; height:auto;}
+/* Separators are structural rather than &nbsp;·&nbsp; text, so the line can
+   break between claims instead of mid-phrase. */
+.eyebrow{
+  display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+  gap:4px 12px; list-style:none;
+  color:var(--brick); margin-bottom:14px;
+}
+.eyebrow li:not(:last-child)::after{content:"·"; margin-left:12px; opacity:0.5;}
+.hero h1{
+  font-size:clamp(42px,7vw,84px);
+  color:var(--orange-dark);
+  -webkit-text-stroke:2px var(--ink);
+  text-shadow:4px 4px 0 var(--gold);
+  margin-bottom:22px;
+}
+.hero p.sub{
+  font-size:19px; font-weight:500; max-width:560px; margin:0 auto 34px; color:var(--ink); opacity:0.85;
+}
+.btn-row{display:flex; gap:18px; justify-content:center; flex-wrap:wrap;}
+.btn{
+  font-family:'Oswald'; font-weight:700; letter-spacing:2px; text-transform:uppercase; font-size:14px;
+  padding:16px 34px; border-radius:2px; box-shadow:4px 4px 0 var(--ink); transition:.15s;
+}
+.btn:hover{transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink);}
+.btn-primary{background:var(--orange); color:var(--paper); border:2px solid var(--ink);}
+.btn-secondary{background:var(--paper); color:var(--ink); border:2px solid var(--ink);}
+
+/* ---------- Story / label strip ---------- */
+/* Section paints edge to edge; the inner wrapper carries the same 1180px cap
+   the products and footer grids use, so the two columns stay centered on wide
+   screens instead of leaving slack on the right. */
+.story{
+  background:var(--brick);
+  color:var(--paper);
+  padding:80px 5%;
+}
+.story-inner{
+  max-width:1180px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+}
+/* Capped and given an arch proportion — at 1/1 in a half-width column this
+   rendered ~620px tall and dwarfed the copy beside it. 5/7 rather than 5/6
+   because the illustration is portrait (748x1044); the taller arch lets it
+   hit its target width without crowding the crown. */
+.story .art{
+  width:100%; max-width:340px; aspect-ratio:5/7; margin:0 auto;
+  background:var(--paper); border-radius:50% 50% 4px 4px; border:6px solid var(--cream);
+  display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+}
+/* contain keeps the watercolor's proportions at any viewport; the width cap
+   keeps it from ever scaling past the source's 748px (≈2.7x at max size, so
+   it stays crisp on retina). top nudges it clear of the arch crown. */
+.story .art img{
+  width:80%; max-width:270px; height:82%;
+  object-fit:contain;
+  position:relative; top:1.5%;
+}
+.story .copy .label{color:var(--gold); margin-bottom:12px;}
+.story h2{font-size:clamp(30px,4vw,46px); margin-bottom:20px;}
+.story p{font-size:16.5px; line-height:1.75; opacity:0.92; max-width:520px;}
+.story .script{font-size:22px; color:var(--gold); display:block; margin-top:20px;}
+
+/* ---------- Products ---------- */
+.products{padding:90px 5% 70px; text-align:center;}
+.products .label{color:var(--brick);}
+.products h2{font-size:clamp(32px,4.5vw,52px); color:var(--ink); margin:12px 0 50px;}
+.grid{display:grid; grid-template-columns:repeat(3,1fr); gap:34px; max-width:1180px; margin:0 auto;}
+/* Each card sets --accent inline; it drives the offset shadow, the art frame
+   and the wash, so one value differentiates the whole card. */
+.card{
+  background:var(--paper); border:2.5px solid var(--ink); border-radius:0 0 6px 6px;
+  box-shadow:6px 6px 0 var(--accent, var(--orange));
+  overflow:hidden; text-align:left;
+}
+/* Illustration panel — the art is the headline of the card now, so it gets a
+   square of its own instead of a 150px band. The sources are 1408x768 with the
+   subject centred in the middle ~48%; cropping to a square with `cover` throws
+   away the empty side margins so the fruit fills the panel rather than
+   floating in it, and still shows every subject in full. */
+.card-art{
+  position:relative; isolation:isolate;
+  aspect-ratio:1/1;
+  background:var(--paper);
+  border-bottom:2.5px solid var(--ink);
+  overflow:hidden;
+}
+.card-art img{width:100%; height:100%; object-fit:cover; object-position:center;}
+/* Accent wash: ties each illustration to its product colour, and evens out the
+   three scans, whose paper tones don't match (the lime is near-white, the other
+   two are warm cream). Light enough to leave the watercolour detail intact. */
+.card-art::after{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:var(--accent, var(--orange)); mix-blend-mode:multiply; opacity:0.12;
+}
+/* Printed-label frame over a paper vignette that feathers each scan's edge into
+   the card stock. The frame is listed first so it paints above the feather. */
+.card-art::before{
+  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+  box-shadow:
+    inset 0 0 0 5px var(--accent, var(--orange)),
+    inset 0 0 22px 10px var(--paper);
+}
+.card-body{padding:26px 24px 30px;}
+.card-body .label{color:var(--brick); font-size:11px; margin-bottom:6px;}
+.card-body h3{font-family:'Oswald'; font-size:21px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; color:var(--ink);}
+.card-body p{font-size:14.5px; line-height:1.6; color:var(--ink); opacity:0.8; margin-bottom:16px;}
+.price{font-family:'Oswald'; font-weight:700; font-size:15px; color:var(--orange-dark);}
+
+/* ---------- Botanical band with quote ---------- */
+.quote-band{padding:110px 5%; text-align:center; position:relative;}
+.quote-band .overlay{
+  max-width:760px; margin:0 auto; background:var(--cream); border:3px solid var(--ink); padding:50px 40px;
+  box-shadow:8px 8px 0 var(--navy);
+}
+.quote-band p{font-family:'Rye'; font-size:clamp(24px,3.4vw,36px); color:var(--navy); line-height:1.3;}
+.quote-band .script{display:block; margin-top:18px; font-size:18px; color:var(--brick);}
+
+/* ---------- Ethos row ---------- */
+.ethos{background:var(--cream); padding:80px 5%; text-align:center;}
+.ethos .label{color:var(--brick); margin-bottom:12px;}
+.ethos h2{font-size:clamp(30px,4vw,44px); margin-bottom:50px;}
+.ethos-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:40px; max-width:1000px; margin:0 auto;}
+.ethos-item .icon{
+  width:64px; height:64px; margin:0 auto 18px; border-radius:50%; background:var(--navy);
+  display:flex; align-items:center; justify-content:center; color:var(--gold); font-family:'Rye'; font-size:24px;
+  border:2.5px solid var(--ink);
+}
+.ethos-item h3{font-family:'Oswald'; font-size:16px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; color:var(--ink);}
+.ethos-item p{font-size:14px; line-height:1.65; color:var(--ink); opacity:0.75; max-width:260px; margin:0 auto;}
+
+/* ---------- Footer ---------- */
+footer{background:var(--navy); color:var(--cream); padding:70px 5% 30px;}
+.foot-top{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:50px; max-width:1180px; margin:0 auto 50px;}
+.foot-brand img{height:58px; margin-bottom:18px;}
+.foot-brand p{font-size:14px; opacity:0.75; max-width:280px; line-height:1.6;}
+.foot-col .label{color:var(--gold); margin-bottom:16px; display:block;}
+.foot-col a{display:block; font-size:14.5px; margin-bottom:10px; opacity:0.85;}
+.foot-col a:hover{opacity:1; color:var(--gold);}
+.newsletter{display:flex; margin-top:6px; border:2px solid var(--cream);}
+.newsletter input{background:transparent; border:none; padding:12px 14px; color:var(--cream); font-family:'Poppins'; font-size:13px; flex:1;}
+.newsletter input::placeholder{color:var(--cream); opacity:0.55;}
+.newsletter button{background:var(--orange); color:var(--paper); border:none; padding:0 20px; font-family:'Oswald'; font-weight:700; font-size:12px; letter-spacing:1.5px; text-transform:uppercase;}
+.foot-bottom{border-top:1px solid rgba(246,228,196,0.25); padding-top:24px; display:flex; justify-content:space-between; max-width:1180px; margin:0 auto; font-size:12.5px; opacity:0.6; flex-wrap:wrap; gap:10px;}
+
+@media(max-width:860px){
+  nav ul{display:none;}
+  .story-inner{grid-template-columns:1fr;}
+  .grid{grid-template-columns:1fr;}
+  /* A full-width square panel is overwhelming on a phone; the crop still
+     clears every subject at 4/3. */
+  .card-art{aspect-ratio:4/3;}
+  .ethos-grid{grid-template-columns:1fr;}
+  .foot-top{grid-template-columns:1fr; gap:36px;}
+}
+
+@media(max-width:520px){
+  /* Tighten the eyebrow so all three claims hold one line on a phone. */
+  .eyebrow{font-size:10.5px; letter-spacing:1.4px; gap:3px 8px;}
+  .eyebrow li:not(:last-child)::after{margin-left:8px;}
+}

@@ -3,6 +3,7 @@
 
 # Never diff/merge binary assets as text
 *.png binary
+*.webp binary
 *.jpg binary
 *.jpeg binary
 *.gif binary

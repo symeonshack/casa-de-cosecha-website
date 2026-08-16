@@ -15,3 +15,8 @@ desktop.ini
 # Env / secrets
 .env
 .env.local
+
+# Full-resolution image masters. The site serves the WebP exports instead, so
+# these ~7 MB of PNGs would sit in history forever without ever being fetched.
+# Local-only: back them up elsewhere. See README > Images.
+assets/originals/
