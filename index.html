@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa de Cosecha — Small-batch soap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Kaushan+Script&family=Oswald:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F6E4C4;
+    --paper:#FBF2DE;
+    --orange:#DE511B;
+    --orange-dark:#B93F14;
+    --brick:#8A2A1B;
+    --navy:#1C2A47;
+    --gold:#F2A93A;
+    --leaf:#4B6B3A;
+    --ink:#241408;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Poppins', sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Rye', serif; font-weight:400; letter-spacing:0.5px; line-height:1.05;}
+  .script{font-family:'Kaushan Script', cursive; font-weight:400;}
+  .label{
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-size:13px;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+
+  /* ---------- SVG wallpaper pattern (placeholder botanical) ---------- */
+  .botanical-strip{
+    background-color:var(--paper);
+    background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%23DE511B' stroke-width='2.5'%3E%3Ccircle cx='40' cy='40' r='9'/%3E%3Cpath d='M40 31 C 34 22, 22 22, 20 32 C 18 42, 30 46, 40 40 C 50 46, 62 42, 60 32 C 58 22, 46 22, 40 31 Z'/%3E%3Cpath d='M40 20 L40 60 M22 40 L58 40' stroke='%23F2A93A' stroke-width='1.5'/%3E%3Cpath d='M130 120 q -18 -30 -40 -14 q 6 26 40 14z' fill='%234B6B3A' stroke='none' opacity='0.85'/%3E%3Cpath d='M110 96 q -6 -18 -22 -16' stroke='%234B6B3A'/%3E%3Cellipse cx='150' cy='60' rx='14' ry='14' fill='%23F2A93A' opacity='0.9' stroke='%23B93F14'/%3E%3Cpath d='M150 46 L150 74 M136 60 L164 60' stroke='%231C2A47' stroke-width='1.2'/%3E%3Cpath d='M20 140 q10 -22 30 -10 q -4 22 -30 10z' fill='%23DE511B' opacity='0.15'/%3E%3C/g%3E%3C/svg%3E");
+    background-size:130px 130px;
+  }
+
+  /* ---------- Scalloped arch divider (echoes logo rind arch) ---------- */
+  .scallop{
+    width:100%;
+    height:34px;
+    display:block;
+  }
+  .scallop-down{ transform: rotate(180deg); }
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--cream);
+    border-bottom:3px solid var(--ink);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 5%;
+  }
+  .nav-mark{display:flex; align-items:center; gap:12px;}
+  .nav-mark img{height:42px; width:auto;}
+  .nav-mark span{font-family:'Rye'; font-size:20px; color:var(--brick);}
+  nav ul{display:flex; gap:34px; list-style:none;}
+  nav a{ font-family:'Oswald'; font-weight:600; letter-spacing:2px; font-size:13px; text-transform:uppercase; color:var(--ink); border-bottom:2px solid transparent; padding-bottom:4px; transition:.2s;}
+  nav a:hover{border-color:var(--orange); color:var(--orange-dark);}
+  .nav-cta{
+    background:var(--orange); color:var(--paper); padding:10px 22px; border-radius:2px;
+    font-family:'Oswald'; font-weight:700; letter-spacing:2px; font-size:12px; text-transform:uppercase;
+    box-shadow:3px 3px 0 var(--ink);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    background:var(--cream);
+    padding:90px 5% 60px;
+    text-align:center;
+    overflow:hidden;
+  }
+
+  .hero-inner{position:relative; z-index:2; max-width:840px; margin:0 auto;}
+
+  /* Logo mark on a citrus-crate sunburst. Rays radiate in every direction, so
+     unlike a disc there's no silhouette to mismatch against the arch-shaped mark.
+     Uses logo-mark.png (trimmed of its transparent padding) so the width below
+     is the width you actually see. */
+  .hero-logo-wrap{
+    position:relative;
+    width:clamp(190px, 27vw, 264px);
+    margin:0 auto 34px;
+  }
+  /* Radiant point sits on the flat edge of the citrus slice, so the mark reads
+     as a sun rising out of the burst rather than a badge pasted over it. */
+  .hero-logo-wrap::before{
+    content:"";
+    position:absolute; left:50%; top:47%;
+    width:225%; aspect-ratio:1/1;
+    transform:translate(-50%,-50%);
+    background:repeating-conic-gradient(from 3deg at 50% 50%,
+      var(--gold) 0deg 5.5deg, transparent 5.5deg 15deg);
+    -webkit-mask-image:radial-gradient(closest-side, #000 20%, rgba(0,0,0,0.5) 46%, transparent 68%);
+    mask-image:radial-gradient(closest-side, #000 20%, rgba(0,0,0,0.5) 46%, transparent 68%);
+    opacity:0.5;
+    pointer-events:none;
+  }
+  .hero img.hero-logo{position:relative; width:100%; height:auto;}
+  /* Separators are structural rather than &nbsp;·&nbsp; text, so the line can
+     break between claims instead of mid-phrase. */
+  .eyebrow{
+    display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+    gap:4px 12px; list-style:none;
+    color:var(--brick); margin-bottom:14px;
+  }
+  .eyebrow li:not(:last-child)::after{content:"·"; margin-left:12px; opacity:0.5;}
+  .hero h1{
+    font-size:clamp(42px,7vw,84px);
+    color:var(--orange-dark);
+    -webkit-text-stroke:2px var(--ink);
+    text-shadow:4px 4px 0 var(--gold);
+    margin-bottom:22px;
+  }
+  .hero p.sub{
+    font-size:19px; font-weight:500; max-width:560px; margin:0 auto 34px; color:var(--ink); opacity:0.85;
+  }
+  .btn-row{display:flex; gap:18px; justify-content:center; flex-wrap:wrap;}
+  .btn{
+    font-family:'Oswald'; font-weight:700; letter-spacing:2px; text-transform:uppercase; font-size:14px;
+    padding:16px 34px; border-radius:2px; box-shadow:4px 4px 0 var(--ink); transition:.15s;
+  }
+  .btn:hover{transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink);}
+  .btn-primary{background:var(--orange); color:var(--paper); border:2px solid var(--ink);}
+  .btn-secondary{background:var(--paper); color:var(--ink); border:2px solid var(--ink);}
+
+  /* ---------- Story / label strip ---------- */
+  .story{
+    background:var(--brick);
+    color:var(--paper);
+    padding:80px 5%;
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+  }
+  /* Capped and given an arch proportion — at 1/1 in a half-width column this
+     rendered ~620px tall and dwarfed the copy beside it. */
+  .story .art{
+    width:100%; max-width:330px; aspect-ratio:5/6; margin:0 auto;
+    background:var(--orange); border-radius:50% 50% 4px 4px; border:6px solid var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .story .art .ring{
+    width:74%; aspect-ratio:1/1; border-radius:50%; border:3px dashed var(--paper);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .story .art span{font-family:'Rye'; font-size:26px; color:var(--paper); text-align:center; line-height:1.3; padding:0 10px;}
+  .story .copy .label{color:var(--gold); margin-bottom:12px;}
+  .story h2{font-size:clamp(30px,4vw,46px); margin-bottom:20px;}
+  .story p{font-size:16.5px; line-height:1.75; opacity:0.92; max-width:480px;}
+  .story .script{font-size:22px; color:var(--gold); display:block; margin-top:20px;}
+
+  /* ---------- Products ---------- */
+  .products{padding:90px 5% 70px; text-align:center;}
+  .products .label{color:var(--brick);}
+  .products h2{font-size:clamp(32px,4.5vw,52px); color:var(--ink); margin:12px 0 50px;}
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:34px; max-width:1180px; margin:0 auto;}
+  .card{
+    background:var(--paper); border:2.5px solid var(--ink); border-radius:0 0 6px 6px;
+    box-shadow:6px 6px 0 var(--orange);
+    overflow:hidden; text-align:left;
+  }
+  .card-top{
+    height:150px; display:flex; align-items:center; justify-content:center; position:relative;
+    border-bottom:2.5px solid var(--ink);
+  }
+  .card-top .fruit{width:88px; height:88px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Rye'; color:var(--paper); font-size:13px; text-align:center; border:3px solid var(--ink);}
+  .card-body{padding:26px 24px 30px;}
+  .card-body .label{color:var(--brick); font-size:11px; margin-bottom:6px;}
+  .card-body h3{font-family:'Oswald'; font-size:21px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; color:var(--ink);}
+  .card-body p{font-size:14.5px; line-height:1.6; color:var(--ink); opacity:0.8; margin-bottom:16px;}
+  .price{font-family:'Oswald'; font-weight:700; font-size:15px; color:var(--orange-dark);}
+
+  /* ---------- Botanical band with quote ---------- */
+  .quote-band{padding:110px 5%; text-align:center; position:relative;}
+  .quote-band .overlay{
+    max-width:760px; margin:0 auto; background:var(--cream); border:3px solid var(--ink); padding:50px 40px;
+    box-shadow:8px 8px 0 var(--navy);
+  }
+  .quote-band p{font-family:'Rye'; font-size:clamp(24px,3.4vw,36px); color:var(--navy); line-height:1.3;}
+  .quote-band .script{display:block; margin-top:18px; font-size:18px; color:var(--brick);}
+
+  /* ---------- Ethos row ---------- */
+  .ethos{background:var(--cream); padding:80px 5%; text-align:center;}
+  .ethos .label{color:var(--brick); margin-bottom:12px;}
+  .ethos h2{font-size:clamp(30px,4vw,44px); margin-bottom:50px;}
+  .ethos-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:40px; max-width:1000px; margin:0 auto;}
+  .ethos-item .icon{
+    width:64px; height:64px; margin:0 auto 18px; border-radius:50%; background:var(--navy);
+    display:flex; align-items:center; justify-content:center; color:var(--gold); font-family:'Rye'; font-size:24px;
+    border:2.5px solid var(--ink);
+  }
+  .ethos-item h3{font-family:'Oswald'; font-size:16px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; color:var(--ink);}
+  .ethos-item p{font-size:14px; line-height:1.65; color:var(--ink); opacity:0.75; max-width:260px; margin:0 auto;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--navy); color:var(--cream); padding:70px 5% 30px;}
+  .foot-top{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:50px; max-width:1180px; margin:0 auto 50px;}
+  .foot-brand img{height:58px; margin-bottom:18px;}
+  .foot-brand p{font-size:14px; opacity:0.75; max-width:280px; line-height:1.6;}
+  .foot-col .label{color:var(--gold); margin-bottom:16px; display:block;}
+  .foot-col a{display:block; font-size:14.5px; margin-bottom:10px; opacity:0.85;}
+  .foot-col a:hover{opacity:1; color:var(--gold);}
+  .newsletter{display:flex; margin-top:6px; border:2px solid var(--cream);}
+  .newsletter input{background:transparent; border:none; padding:12px 14px; color:var(--cream); font-family:'Poppins'; font-size:13px; flex:1;}
+  .newsletter input::placeholder{color:var(--cream); opacity:0.55;}
+  .newsletter button{background:var(--orange); color:var(--paper); border:none; padding:0 20px; font-family:'Oswald'; font-weight:700; font-size:12px; letter-spacing:1.5px; text-transform:uppercase;}
+  .foot-bottom{border-top:1px solid rgba(246,228,196,0.25); padding-top:24px; display:flex; justify-content:space-between; max-width:1180px; margin:0 auto; font-size:12.5px; opacity:0.6; flex-wrap:wrap; gap:10px;}
+
+  @media(max-width:860px){
+    nav ul{display:none;}
+    .story{grid-template-columns:1fr;}
+    .grid{grid-template-columns:1fr;}
+    .ethos-grid{grid-template-columns:1fr;}
+    .foot-top{grid-template-columns:1fr; gap:36px;}
+  }
+
+  @media(max-width:520px){
+    /* Tighten the eyebrow so all three claims hold one line on a phone. */
+    .eyebrow{font-size:10.5px; letter-spacing:1.4px; gap:3px 8px;}
+    .eyebrow li:not(:last-child)::after{margin-left:8px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-mark">
+    <img src="images/logo-mark.png" alt="Casa de Cosecha logo" class="site-logo">
+  </div>
+  <nav><ul>
+    <li><a href="#products">Shop</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#ethos">Ingredients</a></li>
+    <li><a href="#footer">Find Us</a></li>
+  </ul></nav>
+  <a href="#products" class="nav-cta">Shop Soap</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-logo-wrap">
+      <img src="images/logo-mark.png" alt="Casa de Cosecha logo" class="hero-logo">
+    </div>
+
+    <ul class="eyebrow label">
+      <li>Small Batch</li>
+      <li>Florida Grown</li>
+      <li>Tallow &amp; Citrus</li>
+    </ul>
+    <h1>Soap With<br>A Squeeze</h1>
+    <p class="sub">Hand-poured in small batches with grass-fed tallow, real Florida citrus, and the kind of scent that stops you in the shower. This is skin food, not a candle in a bar.</p>
+    <div class="btn-row">
+      <a href="#products" class="btn btn-primary">Shop The Harvest</a>
+      <a href="#story" class="btn btn-secondary">Our Story</a>
+    </div>
+  </div>
+</section>
+
+<!-- scallop divider into botanical strip -->
+<svg class="scallop" viewBox="0 0 1200 34" preserveAspectRatio="none"><path d="M0,0 Q30,34 60,0 Q90,34 120,0 Q150,34 180,0 Q210,34 240,0 Q270,34 300,0 Q330,34 360,0 Q390,34 420,0 Q450,34 480,0 Q510,34 540,0 Q570,34 600,0 Q630,34 660,0 Q690,34 720,0 Q750,34 780,0 Q810,34 840,0 Q870,34 900,0 Q930,34 960,0 Q990,34 1020,0 Q1050,34 1080,0 Q1110,34 1140,0 Q1170,34 1200,0 L1200,34 L0,34 Z" fill="#FBF2DE"/></svg>
+
+<!-- botanical wallpaper strip -->
+<div class="botanical-strip" style="padding:26px 0;"></div>
+
+<svg class="scallop scallop-down" viewBox="0 0 1200 34" preserveAspectRatio="none"><path d="M0,0 Q30,34 60,0 Q90,34 120,0 Q150,34 180,0 Q210,34 240,0 Q270,34 300,0 Q330,34 360,0 Q390,34 420,0 Q450,34 480,0 Q510,34 540,0 Q570,34 600,0 Q630,34 660,0 Q690,34 720,0 Q750,34 780,0 Q810,34 840,0 Q870,34 900,0 Q930,34 960,0 Q990,34 1020,0 Q1050,34 1080,0 Q1110,34 1140,0 Q1170,34 1200,0 L1200,34 L0,34 Z" fill="#FBF2DE"/></svg>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="art">
+    <div class="ring"><span>Est. Tampa, FL</span></div>
+  </div>
+  <div class="copy">
+    <p class="label">Our Story</p>
+    <h2>One Kitchen,<br>One Cosecha</h2>
+    <p>Casa de Cosecha started in a Tampa kitchen: grass-fed tallow and Florida citrus, nothing shipped in from anywhere else. "Cosecha" means harvest — every bar is a small one, poured by hand, cut by hand, wrapped by hand.</p>
+    <p style="margin-top:16px;">No fillers, no fake lather boosters, no mystery fragrance oil. Just what's ripe, rendered, and ready.</p>
+    <span class="script">— la familia Cosecha</span>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <p class="label">The Lineup</p>
+  <h2>Pick Your Peel</h2>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top" style="background:var(--orange);">
+        <div class="fruit" style="background:var(--orange-dark);">Blood<br>Orange</div>
+      </div>
+      <div class="card-body">
+        <p class="label">Tallow &amp; Citrus</p>
+        <h3>Blood Orange Zest</h3>
+        <p>Cold-pressed blood orange peel, grass-fed tallow, a whisper of clove. Bright, warm, unmistakably citrus.</p>
+        <span class="price">$9.00 / 4.5oz bar</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top" style="background:var(--gold);">
+        <div class="fruit" style="background:var(--brick);">Key<br>Lime</div>
+      </div>
+      <div class="card-body">
+        <p class="label">Tallow &amp; Citrus</p>
+        <h3>Key Lime &amp; Sea Salt</h3>
+        <p>Tart Florida key lime, coarse sea salt for texture, a green herbal edge underneath.</p>
+        <span class="price">$9.00 / 4.5oz bar</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top" style="background:var(--leaf);">
+        <div class="fruit" style="background:var(--navy);">Orange<br>Blossom</div>
+      </div>
+      <div class="card-body">
+        <p class="label">Tallow-Free Blend</p>
+        <h3>Orange Blossom Honey</h3>
+        <p>Florida orange blossom honey, oat milk, and a soft floral citrus for sensitive skin.</p>
+        <span class="price">$10.00 / 4.5oz bar</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- QUOTE / BOTANICAL BAND -->
+<div class="botanical-strip">
+  <div class="quote-band">
+    <div class="overlay">
+      <p>"If it doesn't smell like it just came off the tree, it's not going in the pot."</p>
+      <span class="script">— the whole point of Cosecha</span>
+    </div>
+  </div>
+</div>
+
+<!-- ETHOS -->
+<section class="ethos" id="ethos">
+  <p class="label">Why It's Different</p>
+  <h2>What Goes In The Pot</h2>
+  <div class="ethos-grid">
+    <div class="ethos-item">
+      <div class="icon">🍊</div>
+      <h3>Real Peel, Real Juice</h3>
+      <p>Citrus sourced from actual fruit — zested and pressed, never a fragrance-oil substitute.</p>
+    </div>
+    <div class="ethos-item">
+      <div class="icon">🐄</div>
+      <h3>Grass-Fed Tallow</h3>
+      <p>Rendered slow, sourced local, the same base humans used for centuries before "natural" was a marketing word.</p>
+    </div>
+    <div class="ethos-item">
+      <div class="icon">✋</div>
+      <h3>Poured By Hand</h3>
+      <p>Small batches, hand-cut, hand-stamped. No two bars are quite the same shade of orange.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="foot-top">
+    <div class="foot-brand">
+    <img src="images/logo-mark.png" alt="Casa de Cosecha logo" class="site-logo">
+
+      <p>Small-batch soap made with grass-fed tallow and real Florida citrus. Tampa, FL.</p>
+    </div>
+    <div class="foot-col">
+      <span class="label">Shop</span>
+      <a href="#">All Soaps</a>
+      <a href="#">Gift Boxes</a>
+      <a href="#">Wholesale</a>
+    </div>
+    <div class="foot-col">
+      <span class="label">Stay Ripe</span>
+      <p style="font-size:13.5px; opacity:0.8; margin-bottom:14px;">New batches, drop dates, first dibs.</p>
+      <div class="newsletter">
+        <input type="email" placeholder="your@email.com">
+        <button>Join</button>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Casa de Cosecha. All rights reserved.</span>
+    <span>Made by hand in Tampa, Florida</span>
+  </div>
+</footer>
+
+</body>
+</html>
