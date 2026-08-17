@@ -96,9 +96,12 @@ nav a:hover{border-color:var(--orange); color:var(--orange-dark);}
    unlike a disc there's no silhouette to mismatch against the arch-shaped mark.
    Uses logo-mark.webp (trimmed of its transparent padding) so the width below
    is the width you actually see. */
+/* Sized up so the citrus wedge inside the arch reads as illustration rather than
+   a small badge. 400px is the ceiling the artwork supports: the served mark is
+   1000px wide, so this still lands at 2.5x for retina. */
 .hero-logo-wrap{
   position:relative;
-  width:clamp(190px, 27vw, 264px);
+  width:clamp(240px, 34vw, 400px);
   margin:0 auto 34px;
 }
 /* Radiant point sits on the flat edge of the citrus slice, so the mark reads
@@ -250,7 +253,9 @@ nav a:hover{border-color:var(--orange); color:var(--orange-dark);}
 /* ---------- Footer ---------- */
 footer{background:var(--navy); color:var(--cream); padding:70px 5% 30px;}
 .foot-top{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:50px; max-width:1180px; margin:0 auto 50px;}
-.foot-brand img{height:58px; margin-bottom:18px;}
+/* width:auto is load-bearing — the img carries width/height attributes for
+   layout stability, and without it those drive the width and squash the mark. */
+.foot-brand img{height:58px; width:auto; margin-bottom:18px;}
 .foot-brand p{font-size:14px; opacity:0.75; max-width:280px; line-height:1.6;}
 .foot-col .label{color:var(--gold); margin-bottom:16px; display:block;}
 .foot-col a{display:block; font-size:14.5px; margin-bottom:10px; opacity:0.85;}

@@ -21,7 +21,8 @@ assets/
   originals/                           Full-resolution PNG masters — git-ignored,
                                        local editing sources only (see Images)
 images/
-  logo-mark.webp                       Brand mark, trimmed to its visible content box
+  logo-mark.webp                       Full badge lockup — hero only
+  logo-wedge.webp                      Citrus wedge mark — header and footer
 ```
 
 The styles live in `assets/css/site.css` rather than a `<style>` block so that
@@ -44,20 +45,27 @@ native 1408x768 because the card crops to the centre square — that discards 45
 of the width, so the panel only gets ~2.1x pixel density at desktop size and
 there is no room to shrink them. They are encoded lossy at quality 92.
 
-The logo is handled differently, because it is flat-colour art with hard edges
-rather than a watercolour scan, and lossy encoding puts visible ringing along
-those edges. It is quantized to 256 colours and then encoded **lossless**, which
-came out both smaller and cleaner than lossy at the same width (60 KB at 46.6 dB,
-versus 123 KB at 31.6 dB for lossy quality 96). It is served at 800px wide, 3.0x
-the 264px it occupies in the hero, its largest appearance.
+There are two brand marks, and they are encoded by different rules:
 
-Two things to preserve when replacing the logo:
+- **`logo-mark.webp`** — the full badge lockup, hero only, 1000px wide (2.5x the
+  400px it renders at). Flat-colour art with hard edges, where lossy WebP rings
+  visibly, so it is quantized to 256 colours and encoded **lossless**. That came
+  out both smaller and cleaner than lossy at the same width: at 800px it measured
+  60 KB / 46.6 dB against 123 KB / 31.6 dB for lossy quality 96.
+- **`logo-wedge.webp`** — the citrus wedge, header and footer, 400px wide (3.7x
+  the 108px footer, its larger use). This one is a painterly watercolour with
+  smooth gradients, so quantizing bands it; it is plain lossy at quality 94.
 
-- **Trim the transparent padding first.** The CSS sizes the mark by its box, so
-  padding inside the file shrinks the mark everywhere it appears. The master that
-  produced the current file was 2000x2000 with the mark filling only 39% of it.
-- One file, `images/logo-mark.webp`, serves the header, hero and footer. Keeping
-  its 1.14 aspect ratio makes a swap a drop-in with no layout change.
+Two things to preserve when replacing either mark:
+
+- **Trim the transparent padding first.** The CSS sizes a mark by its box, so
+  padding inside the file shrinks the artwork everywhere it appears. The badge
+  master was 2000x2000 with the mark filling only 39% of it; the wedge master was
+  1408x768 filling 22%.
+- If a mark carries `width`/`height` attributes, its CSS rule needs `width:auto`
+  alongside the `height`. Without it the attribute drives the width and the mark
+  renders stretched — this is why `.nav-mark img` and `.foot-brand img` both set
+  it explicitly.
 
 If you swap in a new illustration, check the crop still clears the subject:
 the square panel shows only the middle 768px of the source, and the 4/3 mobile
