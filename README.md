@@ -55,9 +55,9 @@ There are two brand marks, and they are encoded by different rules:
 - **`logo-wedge.webp`** — the citrus wedge, header and footer, 400px wide (3.7x
   the 108px footer, its larger use). This one is a painterly watercolour with
   smooth gradients, so quantizing bands it; it is plain lossy at quality 94.
-  **It is mirrored horizontally relative to its master** — the master in
-  `assets/originals/` is the original orientation, so a re-export has to flip it
-  again or the wedge will silently face the wrong way.
+  **It is flipped vertically relative to its master** so the rind dome sits at
+  the top, echoing the arch of the badge. The master in `assets/originals/` is
+  dome-down, so a re-export has to flip it again or the wedge lands upside down.
 
 Two things to preserve when replacing either mark:
 
