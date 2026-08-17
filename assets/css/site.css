@@ -6,7 +6,7 @@
 
    Contents, in source order:
      Tokens & base      colour variables, resets, type scale
-     Tile fields        the two Mexican tile mosaics, scallop divider
+     Tile fields        the two Mexican tile mosaics
      Nav / Hero
      Story              the arch and its illustration
      Products           the card grid and illustration panels
@@ -61,9 +61,16 @@ img{max-width:100%; display:block;}
   background-color:var(--navy);
   background-repeat:repeat;
 }
-/* Divider: one row of bold medallions, eight distinct tiles before it repeats. */
+/* Divider: one row of bold medallions, eight distinct tiles before it repeats.
+   The navy top and bottom rules replace the scalloped edges this band used to
+   have — same framing, straight instead of wavy. They are borders rather than
+   extra elements so the 114px stays the height of the tile row itself; the box
+   is 150px overall. background-origin is padding-box by default, so the mosaic
+   sits inside the frame rather than running under it. */
 .tile-field--divider{
-  height:114px;
+  height:150px;
+  border-top:18px solid var(--navy);
+  border-bottom:18px solid var(--navy);
   background-image:url("../patterns/tiles-divider.webp");
   background-size:912px 114px;
   background-repeat:repeat-x;
@@ -74,14 +81,6 @@ img{max-width:100%; display:block;}
   background-image:url("../patterns/tiles-band.webp");
   background-size:684px 684px;
 }
-
-/* ---------- Scalloped arch divider (echoes logo rind arch) ---------- */
-.scallop{
-  width:100%;
-  height:34px;
-  display:block;
-}
-.scallop-down{ transform: rotate(180deg); }
 
 /* ---------- Nav ---------- */
 header{
@@ -315,7 +314,7 @@ footer{background:var(--navy); color:var(--cream); padding:70px 5% 30px;}
 @media(max-width:860px){
   nav ul{display:none;}
   .story-inner{grid-template-columns:1fr;}
-  .tile-field--divider{height:84px; background-size:672px 84px;}
+  .tile-field--divider{height:112px; border-top-width:14px; border-bottom-width:14px; background-size:672px 84px;}
   .tile-field--band{background-size:504px 504px;}
   .grid{grid-template-columns:1fr;}
   /* A full-width square panel is overwhelming on a phone; the crop still
