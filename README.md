@@ -111,6 +111,13 @@ renders its tiles larger and sits near 1.3x, because the concept sheet caps each
 tile around 218px and upscaling past that only synthesises detail — measured at
 381 KB against 152 KB for no real gain, so the native pixels ship.
 
+The band's arrangement is constrained, not shuffled. Every row is a full
+permutation of the eight tiles, and no tile touches itself in any of the eight
+directions **on a torus** — the mosaic repeats, so column 7 really does sit
+against column 0, and at the mobile row count row 2 sits against row 0. An
+earlier version checked adjacency only inside the grid and shipped a pair of
+identical tiles meeting across the horizontal seam.
+
 Two of the eighteen tiles are deliberately unused — the orange lattice and the
 interlocking circles are cream-dominant and read as holes in a dark field.
 
