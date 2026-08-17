@@ -74,6 +74,24 @@
 <section class="products" id="products">
   <p class="label">The Lineup</p>
   <h2>Pick Your Peel</h2>
+
+  <!-- Flagship: one wide card above the grid so the hero bar can't be mistaken
+       for one of three equals -->
+  <div class="card card--flagship" style="--accent:var(--herb);">
+    <div class="card-art">
+      <img src="assets/illustrations/lemongrass-mint-illustration.webp"
+           alt="Watercolor illustration of mint sprigs and lemongrass blades tied together with twine"
+           width="940" height="940" decoding="async">
+    </div>
+    <div class="card-body">
+      <p class="flag">The Flagship</p>
+      <p class="label">Tallow &amp; Herbal</p>
+      <h3>Lemongrass Mint</h3>
+      <p>Grass-fed tallow, coconut and jojoba oils, scented with lemongrass, mint, and a whisper of tea tree.</p>
+      <span class="price">$9.00 / 4.5oz bar</span>
+    </div>
+  </div>
+
   <div class="grid">
 
     <div class="card" style="--accent:var(--orange);">
@@ -104,20 +122,37 @@
       </div>
     </div>
 
-    <div class="card" style="--accent:var(--gold);">
+    <div class="card" style="--accent:var(--navy);">
       <div class="card-art">
-        <img src="assets/illustrations/orange-blossom-illustration.webp"
-             alt="Watercolor illustration of an orange blossom flower in bloom"
-             width="1408" height="768" loading="lazy" decoding="async">
+        <img src="assets/illustrations/bahiagrass-illustration.webp"
+             alt="Watercolor illustration of a bahiagrass clump with its seed heads"
+             width="940" height="940" loading="lazy" decoding="async">
       </div>
       <div class="card-body">
-        <p class="label">Tallow-Free Blend</p>
-        <h3>Orange Blossom Honey</h3>
-        <p>Florida orange blossom honey, oat milk, and a soft floral citrus for sensitive skin.</p>
-        <span class="price">$10.00 / 4.5oz bar</span>
+        <p class="label">Tallow · Unscented</p>
+        <h3>Bare</h3>
+        <p>No essential oils, no fragrance, nothing extra. Just grass-fed tallow, coconut, and jojoba oils — for skin that wants less.</p>
+        <span class="price">$7.00 / 4.5oz bar</span>
       </div>
     </div>
 
+  </div>
+
+  <!-- Demoted out of the forward lineup to keep the grid at three; still listed
+       so the bar stays findable -->
+  <p class="label lineup-more">Also In The Batch</p>
+  <div class="card card--minor" style="--accent:var(--gold);">
+    <div class="card-art">
+      <img src="assets/illustrations/orange-blossom-illustration.webp"
+           alt="Watercolor illustration of an orange blossom flower in bloom"
+           width="1408" height="768" loading="lazy" decoding="async">
+    </div>
+    <div class="card-body">
+      <p class="label">Tallow-Free Blend</p>
+      <h3>Orange Blossom Honey</h3>
+      <p>Florida orange blossom honey, oat milk, and a soft floral citrus for sensitive skin.</p>
+    </div>
+    <span class="price">$10.00 / 4.5oz bar</span>
   </div>
 </section>
 
@@ -125,8 +160,7 @@
 <div class="tile-field tile-field--band">
   <div class="quote-band">
     <div class="overlay">
-      <p>"If it doesn't smell like it just came off the tree, it's not going in the pot."</p>
-      <span class="script">— the whole point of Cosecha</span>
+      <p>"Soap used to be fat, lye, and time. We didn't see a reason to improve on that."</p>
     </div>
   </div>
 </div>
