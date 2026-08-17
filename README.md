@@ -13,11 +13,14 @@ index.html                             Markup for the single page
 assets/
   css/
     site.css                           All styles, shared by every page
-  illustrations/                       Watercolor botanical art, as served
+  illustrations/                       Watercolor art, as served
     orange-branch.webp                   Our Story arch
     blood-orange-illustration.webp       Product card art
     key-lime-illustration.webp           Product card art
     orange-blossom-illustration.webp     Product card art
+    orange-icon.webp                     "What Goes In The Pot" medallion
+    cow-icon.webp                        "What Goes In The Pot" medallion
+    hand-soap-icon.webp                  "What Goes In The Pot" medallion
   originals/                           Full-resolution PNG masters — git-ignored,
                                        local editing sources only (see Images)
 images/
