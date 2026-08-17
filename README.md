@@ -21,6 +21,9 @@ assets/
     orange-icon.webp                     "What Goes In The Pot" medallion
     cow-icon.webp                        "What Goes In The Pot" medallion
     hand-soap-icon.webp                  "What Goes In The Pot" medallion (see below)
+  patterns/                            Mexican tile mosaics (section backgrounds)
+    tiles-divider.webp                   1x8 bold medallions, hero -> Our Story
+    tiles-band.webp                      6x6 leaf motifs, behind the pull-quote
   originals/                           Full-resolution PNG masters — git-ignored,
                                        local editing sources only (see Images)
 images/
@@ -83,6 +86,28 @@ Two things to preserve when replacing either mark:
 If you swap in a new illustration, check the crop still clears the subject:
 the square panel shows only the middle 768px of the source, and the 4/3 mobile
 panel the middle 1024px.
+
+### Tile fields
+
+The two dark bands are cut from one concept sheet (`assets/originals/tile-concept-sheet.png`,
+an 18-tile grid) and recoloured to brand tokens. Two things make them work:
+
+- **Grout is baked into the cell, not added between cells.** Each cell is 216px
+  of tile plus 6px of grout on all four sides, so a repeat seam lays down 12px —
+  exactly the internal spacing. Change that symmetry and a visible join appears
+  every repeat.
+- **The clay maps to `--orange-dark`, not `--orange`.** At field scale the
+  brighter orange reads neon; the deeper one keeps the ceramic warmth. Both are
+  brand tokens, so this is a scale decision, not a palette exception.
+
+Two of the eighteen tiles are deliberately unused — the orange lattice and the
+interlocking circles are cream-dominant and read as holes in a dark field.
+
+Recolouring uses five anchors, not three: the source has a darker navy carrying
+the tiles' internal shading, and dropping it flattens them. Each pixel is
+projected onto the segment between its two nearest anchors, which keeps
+anti-aliased edges clean — roughly a quarter of pixels are edge blends, and a
+naive nearest-colour swap fringes every motif.
 
 ## Local preview
 

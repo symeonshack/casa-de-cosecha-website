@@ -6,7 +6,7 @@
 
    Contents, in source order:
      Tokens & base      colour variables, resets, type scale
-     Patterns           botanical wallpaper, scallop divider
+     Tile fields        the two Mexican tile mosaics, scallop divider
      Nav / Hero
      Story              the arch and its illustration
      Products           the card grid and illustration panels
@@ -46,11 +46,33 @@ h1,h2,h3{font-family:'Rye', serif; font-weight:400; letter-spacing:0.5px; line-h
 a{color:inherit; text-decoration:none;}
 img{max-width:100%; display:block;}
 
-/* ---------- SVG wallpaper pattern (placeholder botanical) ---------- */
-.botanical-strip{
-  background-color:var(--paper);
-  background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%23DE511B' stroke-width='2.5'%3E%3Ccircle cx='40' cy='40' r='9'/%3E%3Cpath d='M40 31 C 34 22, 22 22, 20 32 C 18 42, 30 46, 40 40 C 50 46, 62 42, 60 32 C 58 22, 46 22, 40 31 Z'/%3E%3Cpath d='M40 20 L40 60 M22 40 L58 40' stroke='%23F2A93A' stroke-width='1.5'/%3E%3Cpath d='M130 120 q -18 -30 -40 -14 q 6 26 40 14z' fill='%234B6B3A' stroke='none' opacity='0.85'/%3E%3Cpath d='M110 96 q -6 -18 -22 -16' stroke='%234B6B3A'/%3E%3Cellipse cx='150' cy='60' rx='14' ry='14' fill='%23F2A93A' opacity='0.9' stroke='%23B93F14'/%3E%3Cpath d='M150 46 L150 74 M136 60 L164 60' stroke='%231C2A47' stroke-width='1.2'/%3E%3Cpath d='M20 140 q10 -22 30 -10 q -4 22 -30 10z' fill='%23DE511B' opacity='0.15'/%3E%3C/g%3E%3C/svg%3E");
-  background-size:130px 130px;
+/* ---------- Mexican tile fields ---------- */
+/* Two mosaics cut from one concept sheet and recoloured to brand tokens. Each
+   cell is 216px of tile plus 6px of grout on all four sides, so where the
+   pattern repeats the seam lays down 12px of grout — identical to the spacing
+   between neighbours inside the unit. That makes both mosaics tile seamlessly
+   without a visible join. Served at 2x the rendered size.
+
+   The clay maps to --orange-dark rather than --orange on purpose: at field
+   scale the brighter orange reads neon, where this holds the ceramic warmth of
+   the source art. --navy underneath is a fallback for the moment before the
+   image lands. */
+.tile-field{
+  background-color:var(--navy);
+  background-repeat:repeat;
+}
+/* Divider: one row of bold medallions, eight distinct tiles before it repeats. */
+.tile-field--divider{
+  height:114px;
+  background-image:url("../patterns/tiles-divider.webp");
+  background-size:912px 114px;
+  background-repeat:repeat-x;
+  background-position:center;
+}
+/* Quote band: calmer leaf and frond motifs so the text panel stays dominant. */
+.tile-field--band{
+  background-image:url("../patterns/tiles-band.webp");
+  background-size:684px 684px;
 }
 
 /* ---------- Scalloped arch divider (echoes logo rind arch) ---------- */
@@ -228,11 +250,11 @@ nav a:hover{border-color:var(--orange); color:var(--orange-dark);}
 .card-body p{font-size:14.5px; line-height:1.6; color:var(--ink); opacity:0.8; margin-bottom:16px;}
 .price{font-family:'Oswald'; font-weight:700; font-size:15px; color:var(--orange-dark);}
 
-/* ---------- Botanical band with quote ---------- */
+/* ---------- Tile band with quote ---------- */
 .quote-band{padding:110px 5%; text-align:center; position:relative;}
 .quote-band .overlay{
   max-width:760px; margin:0 auto; background:var(--cream); border:3px solid var(--ink); padding:50px 40px;
-  box-shadow:8px 8px 0 var(--navy);
+  box-shadow:8px 8px 0 var(--orange);
 }
 .quote-band p{font-family:'Rye'; font-size:clamp(24px,3.4vw,36px); color:var(--navy); line-height:1.3;}
 .quote-band .script{display:block; margin-top:18px; font-size:18px; color:var(--brick);}
@@ -293,6 +315,8 @@ footer{background:var(--navy); color:var(--cream); padding:70px 5% 30px;}
 @media(max-width:860px){
   nav ul{display:none;}
   .story-inner{grid-template-columns:1fr;}
+  .tile-field--divider{height:84px; background-size:672px 84px;}
+  .tile-field--band{background-size:504px 504px;}
   .grid{grid-template-columns:1fr;}
   /* A full-width square panel is overwhelming on a phone; the crop still
      clears every subject at 4/3. */
