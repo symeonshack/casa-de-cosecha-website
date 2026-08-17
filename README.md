@@ -23,7 +23,7 @@ assets/
     hand-soap-icon.webp                  "What Goes In The Pot" medallion (see below)
   patterns/                            Mexican tile mosaics (section backgrounds)
     tiles-divider.webp                   1x8 bold medallions, hero -> Our Story
-    tiles-band.webp                      6x6 leaf motifs, behind the pull-quote
+    tiles-band.webp                      3x8 leaf motifs, behind the pull-quote
   originals/                           Full-resolution PNG masters — git-ignored,
                                        local editing sources only (see Images)
 images/
@@ -99,6 +99,17 @@ an 18-tile grid) and recoloured to brand tokens. Two things make them work:
 - **The clay maps to `--orange-dark`, not `--orange`.** At field scale the
   brighter orange reads neon; the deeper one keeps the ceramic warmth. Both are
   brand tokens, so this is a scale decision, not a palette exception.
+
+The quote band's mosaic is **three rows tall on purpose**, sized `auto 100%` so
+its height equals the band's — three whole rows then land at any content height
+and any width. Sizing it in pixels cut the bottom row the moment the quote
+rewrapped. Row count per breakpoint is just 300/rows as a percentage: `100%` is
+3 rows, `60%` is 5. Keep the mosaic three rows tall or that arithmetic breaks.
+
+Density differs between the two by design. The divider sits near 1.9x; the band
+renders its tiles larger and sits near 1.3x, because the concept sheet caps each
+tile around 218px and upscaling past that only synthesises detail — measured at
+381 KB against 152 KB for no real gain, so the native pixels ship.
 
 Two of the eighteen tiles are deliberately unused — the orange lattice and the
 interlocking circles are cream-dominant and read as holes in a dark field.

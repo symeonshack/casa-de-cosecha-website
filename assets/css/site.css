@@ -51,7 +51,12 @@ img{max-width:100%; display:block;}
    cell is 216px of tile plus 6px of grout on all four sides, so where the
    pattern repeats the seam lays down 12px of grout — identical to the spacing
    between neighbours inside the unit. That makes both mosaics tile seamlessly
-   without a visible join. Served at 2x the rendered size.
+   without a visible join.
+
+   The divider lands at ~1.9x for retina. The band renders its tiles larger, so
+   it sits at ~1.3x — the concept sheet caps each tile at ~218px, and upscaling
+   past that only synthesises detail: it measured 381 KB against 152 KB for no
+   real gain, so the native pixels ship instead.
 
    The clay maps to --orange-dark rather than --orange on purpose: at field
    scale the brighter orange reads neon, where this holds the ceramic warmth of
@@ -76,10 +81,19 @@ img{max-width:100%; display:block;}
   background-repeat:repeat-x;
   background-position:center;
 }
-/* Quote band: calmer leaf and frond motifs so the text panel stays dominant. */
+/* Quote band: calmer leaf and frond motifs so the text panel stays dominant,
+   at a larger scale than the divider so fewer motifs compete for attention.
+
+   The mosaic is deliberately three rows tall and sized `auto 100%`, which makes
+   its height exactly the height of the band — so three whole tile rows always
+   land, at any content height and any width. Sizing in pixels instead would cut
+   the bottom row the moment the quote rewrapped. Row count per breakpoint is
+   just 300/rows as a percentage: 100% = 3 rows, 60% = 5. */
 .tile-field--band{
   background-image:url("../patterns/tiles-band.webp");
-  background-size:684px 684px;
+  background-size:auto 100%;
+  border-top:18px solid var(--navy);
+  border-bottom:18px solid var(--navy);
 }
 
 /* ---------- Nav ---------- */
@@ -315,7 +329,8 @@ footer{background:var(--navy); color:var(--cream); padding:70px 5% 30px;}
   nav ul{display:none;}
   .story-inner{grid-template-columns:1fr;}
   .tile-field--divider{height:112px; border-top-width:14px; border-bottom-width:14px; background-size:672px 84px;}
-  .tile-field--band{background-size:504px 504px;}
+  /* Taller wrapped text on a phone: five smaller rows instead of three. */
+  .tile-field--band{background-size:auto 60%;}
   .grid{grid-template-columns:1fr;}
   /* A full-width square panel is overwhelming on a phone; the crop still
      clears every subject at 4/3. */
