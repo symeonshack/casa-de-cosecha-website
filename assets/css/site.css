@@ -260,12 +260,17 @@ nav a:hover{border-color:var(--orange); color:var(--orange-dark);}
   width:78%; height:78%;
   object-fit:contain;
 }
-/* The hand is landscape (1.74) where the fruit and cow are portrait (~0.93), so
-   contain alone would leave it looking undersized next to them — and it is the
-   palest of the three. Widening its box evens out the visual weight. Safe at
-   this size: its widest rows fall at its vertical middle, where the circle is
-   also widest, so nothing clips. */
-.ethos-item .icon--wide img{width:94%;}
+/* The hand bleeds rather than fits. Its canvas is composed centred on the
+   hand+soap with the forearm running off the left edge, so at >100% the cut end
+   falls ~12px outside the circle and the arm just disappears behind the border
+   instead of ending in mid-air. 115% is what puts the hand at the same on-screen
+   size as the fruit and cow.
+   max-width and flex are overrides, not decoration: the global img{max-width:100%}
+   cap and flex shrinking would each pull this back to 100% and expose the cut. */
+.ethos-item .icon--wide img{
+  width:115%; height:auto;
+  max-width:none; flex:none;
+}
 .ethos-item h3{font-family:'Oswald'; font-size:16px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; color:var(--ink);}
 .ethos-item p{font-size:14px; line-height:1.65; color:var(--ink); opacity:0.75; max-width:260px; margin:0 auto;}
 

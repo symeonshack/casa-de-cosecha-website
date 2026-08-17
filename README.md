@@ -20,7 +20,7 @@ assets/
     orange-blossom-illustration.webp     Product card art
     orange-icon.webp                     "What Goes In The Pot" medallion
     cow-icon.webp                        "What Goes In The Pot" medallion
-    hand-soap-icon.webp                  "What Goes In The Pot" medallion
+    hand-soap-icon.webp                  "What Goes In The Pot" medallion (see below)
   originals/                           Full-resolution PNG masters — git-ignored,
                                        local editing sources only (see Images)
 images/
@@ -61,6 +61,13 @@ There are two brand marks, and they are encoded by different rules:
   **It is flipped vertically relative to its master** so the rind dome sits at
   the top, echoing the arch of the badge. The master in `assets/originals/` is
   dome-down, so a re-export has to flip it again or the wedge lands upside down.
+
+`hand-soap-icon.webp` is composed rather than simply trimmed. Its master has a
+long forearm, which inside a circular medallion would end in mid-air. The asset
+is instead a square canvas centred on the hand and soap, with the forearm running
+off its left edge, and the CSS renders it at 115% so that cut edge lands outside
+the circle and the arm disappears behind the border. Replacing it means redoing
+that composition — a plain trim will put the cut back inside the frame.
 
 Two things to preserve when replacing either mark:
 
