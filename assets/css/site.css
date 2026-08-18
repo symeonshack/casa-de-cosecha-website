@@ -110,7 +110,12 @@ header{
   display:flex; align-items:center; justify-content:space-between;
   padding:14px 5%;
 }
-.nav-mark{display:flex; align-items:center; gap:12px;}
+/* The mark is the route home from every page. It is the anchor itself rather
+   than a wrapper around one so the whole thing is the tap target, not just the
+   42px of artwork. Opacity rather than a transform on hover: the header is
+   sticky and anything that changes its height jitters the page under it. */
+.nav-mark{display:flex; align-items:center; gap:12px; transition:opacity .2s;}
+.nav-mark:hover{opacity:0.72;}
 .nav-mark img{height:42px; width:auto;}
 .nav-mark span{font-family:'Rye'; font-size:20px; color:var(--brick);}
 nav ul{display:flex; gap:34px; list-style:none;}
