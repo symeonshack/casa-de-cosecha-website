@@ -1,0 +1,82 @@
+[
+  {
+    "slug": "lemongrass-mint",
+    "name": "Lemongrass Mint",
+    "category": "Tallow & Herbal",
+    "description": "Grass-fed tallow, coconut and jojoba oils, scented with lemongrass, mint, and a whisper of tea tree.",
+    "price": "$9.00",
+    "unit": "4.5oz bar",
+    "accent": "herb",
+    "status": "available",
+    "image": {
+      "src": "assets/illustrations/lemongrass-mint-illustration.webp",
+      "alt": "Watercolor illustration of mint sprigs and lemongrass blades tied together with twine",
+      "width": 940,
+      "height": 940
+    }
+  },
+  {
+    "slug": "blood-orange-zest",
+    "name": "Blood Orange Zest",
+    "category": "Tallow & Citrus",
+    "description": "Cold-pressed blood orange peel, grass-fed tallow, a whisper of clove. Bright, warm, unmistakably citrus.",
+    "price": "$9.00",
+    "unit": "4.5oz bar",
+    "accent": "orange",
+    "status": "available",
+    "image": {
+      "src": "assets/illustrations/blood-orange-illustration.webp",
+      "alt": "Watercolor illustration of a blood orange cut in cross-section",
+      "width": 1408,
+      "height": 768
+    }
+  },
+  {
+    "slug": "key-lime-sea-salt",
+    "name": "Key Lime & Sea Salt",
+    "category": "Tallow & Citrus",
+    "description": "Tart Florida key lime, coarse sea salt for texture, a green herbal edge underneath.",
+    "price": "$9.00",
+    "unit": "4.5oz bar",
+    "accent": "leaf",
+    "status": "available",
+    "image": {
+      "src": "assets/illustrations/key-lime-illustration.webp",
+      "alt": "Watercolor illustration of a key lime cut in cross-section",
+      "width": 1408,
+      "height": 768
+    }
+  },
+  {
+    "slug": "orange-blossom-honey",
+    "name": "Orange Blossom Honey",
+    "category": "Tallow & Floral",
+    "description": "Florida orange blossom honey, oat milk, and a soft floral citrus for sensitive skin.",
+    "price": "$9.00",
+    "unit": "4.5oz bar",
+    "accent": "gold",
+    "status": "available",
+    "image": {
+      "src": "assets/illustrations/orange-blossom-illustration.webp",
+      "alt": "Watercolor illustration of an orange blossom flower in bloom",
+      "width": 1408,
+      "height": 768
+    }
+  },
+  {
+    "slug": "bare",
+    "name": "Bare",
+    "category": "Tallow · Unscented",
+    "description": "No essential oils, no fragrance, nothing extra. Just grass-fed tallow, coconut, and jojoba oils — for skin that wants less.",
+    "price": "$7.00",
+    "unit": "4.5oz bar",
+    "accent": "navy",
+    "status": "available",
+    "image": {
+      "src": "assets/illustrations/bahiagrass-illustration.webp",
+      "alt": "Watercolor illustration of a bahiagrass clump with its seed heads",
+      "width": 940,
+      "height": 940
+    }
+  }
+]

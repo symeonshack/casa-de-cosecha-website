@@ -1,0 +1,116 @@
+<!--page
+{
+  "title": "Casa de Cosecha — Small-batch soap",
+  "products": ["lemongrass-mint", "blood-orange-zest", "bare"]
+}
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{{> head }}
+</head>
+<body>
+
+{{> header }}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-logo-wrap">
+      <img src="images/logo-mark.webp" alt="Casa de Cosecha logo" class="hero-logo">
+    </div>
+
+    <ul class="eyebrow label">
+      <li>Small Batch</li>
+      <li>Florida Grown</li>
+      <li>Tallow &amp; Citrus</li>
+    </ul>
+    <h1>Soap With<br>A Squeeze</h1>
+    <p class="sub">Hand-poured in small batches with grass-fed tallow, real Florida citrus, and the kind of scent that stops you in the shower. This is skin food, not a candle in a bar.</p>
+    <div class="btn-row">
+      <a href="shop.html" class="btn btn-primary">Shop The Harvest</a>
+      <a href="#story" class="btn btn-secondary">Our Story</a>
+    </div>
+  </div>
+</section>
+
+<!-- Mexican tile divider — paired with the one below Our Story so the section
+     between them reads as framed -->
+<div class="tile-field tile-field--divider"></div>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="story-inner">
+    <div class="art">
+      <img src="assets/illustrations/orange-branch.webp"
+           alt="Watercolor botanical illustration of an orange branch with fruit, leaves, and blossoms"
+           width="748" height="1044">
+    </div>
+    <div class="copy">
+      <p class="label">Our Story</p>
+      <h2>One Kitchen,<br>One Cosecha</h2>
+      <p>Casa de Cosecha started in a Tampa kitchen: grass-fed tallow and Florida citrus, nothing shipped in from anywhere else. "Cosecha" means harvest — every bar is a small one, poured by hand, cut by hand, wrapped by hand.</p>
+      <p style="margin-top:16px;">No fillers, no fake lather boosters, no mystery fragrance oil. Just what's ripe, rendered, and ready.</p>
+      <span class="script">— la familia Cosecha</span>
+    </div>
+  </div>
+</section>
+
+<div class="tile-field tile-field--divider"></div>
+
+<!-- PRODUCTS — a teaser, not the catalog. The three slugs in the front matter
+     above are one bar from each scent family; the full line lives on shop.html. -->
+<section class="products" id="products">
+  <p class="label">The Lineup</p>
+  <h2>What We Make</h2>
+  <div class="grid">
+{{{ products }}}
+  </div>
+  <p class="lineup-cta"><a href="shop.html" class="btn btn-primary">Shop All Soap</a></p>
+</section>
+
+<!-- QUOTE / TILE BAND -->
+<div class="tile-field tile-field--band">
+  <div class="quote-band">
+    <div class="overlay">
+      <p>"Soap used to be fat, lye, and time. We didn't see a reason to improve on that."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ETHOS -->
+<section class="ethos" id="ethos">
+  <p class="label">Why It's Different</p>
+  <h2>What Goes In The Pot</h2>
+  <div class="ethos-grid">
+    <div class="ethos-item" style="--accent:var(--orange);">
+      <div class="icon">
+        <img src="assets/illustrations/orange-icon.webp" alt=""
+             width="393" height="420" loading="lazy" decoding="async">
+      </div>
+      <h3>Real Peel, Real Juice</h3>
+      <p>Citrus sourced from actual fruit — zested and pressed, never a fragrance-oil substitute.</p>
+    </div>
+    <div class="ethos-item" style="--accent:var(--leaf);">
+      <div class="icon">
+        <img src="assets/illustrations/cow-icon.webp" alt=""
+             width="392" height="420" loading="lazy" decoding="async">
+      </div>
+      <h3>Grass-Fed Tallow</h3>
+      <p>Rendered slow, sourced local, the same base humans used for centuries before "natural" was a marketing word.</p>
+    </div>
+    <div class="ethos-item" style="--accent:var(--navy);">
+      <div class="icon icon--wide">
+        <img src="assets/illustrations/hand-soap-icon.webp" alt=""
+             width="560" height="560" loading="lazy" decoding="async">
+      </div>
+      <h3>Poured By Hand</h3>
+      <p>Small batches, hand-cut, hand-stamped. No two bars are quite the same shade of orange.</p>
+    </div>
+  </div>
+</section>
+
+{{> footer }}
+
+</body>
+</html>

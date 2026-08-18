@@ -1,0 +1,13 @@
+<article class="card" style="--accent:var(--{{ accent }});" data-status="{{ status }}">
+  <div class="card-art">
+    <img src="{{ imageSrc }}" alt="{{ imageAlt }}"
+         width="{{ imageWidth }}" height="{{ imageHeight }}"
+         loading="{{ loading }}" decoding="async">
+  </div>
+  <div class="card-body">
+    <p class="label">{{ category }}</p>
+    <h3>{{ name }}</h3>
+    <p>{{ description }}</p>
+    <span class="price">{{ price }} / {{ unit }}</span>
+  </div>
+</article>

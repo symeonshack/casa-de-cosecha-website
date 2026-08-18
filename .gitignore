@@ -12,6 +12,12 @@ desktop.ini
 # Logs
 *.log
 
+# Build output. `node build.js` regenerates it from src/ every time, and CI
+# builds it fresh before deploying — committing it would only create a way to
+# ship a stale page.
+_site/
+node_modules/
+
 # Env / secrets
 .env
 .env.local

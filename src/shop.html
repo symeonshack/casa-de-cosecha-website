@@ -1,0 +1,29 @@
+<!--page
+{
+  "title": "Shop All Soap — Casa de Cosecha",
+  "products": "all",
+  "eagerImages": 3
+}
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{{> head }}
+</head>
+<body>
+
+{{> header }}
+
+<!-- The catalog: every bar, one card each, in products.json order. The first
+     row sits above the fold here, so those three images load eagerly. -->
+<section class="products products--shop" id="products">
+  <h1>Every Bar We Make</h1>
+  <div class="grid">
+{{{ products }}}
+  </div>
+</section>
+
+{{> footer }}
+
+</body>
+</html>

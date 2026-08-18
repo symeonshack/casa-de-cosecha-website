@@ -3,21 +3,37 @@
 Marketing site for Casa de Cosecha — small-batch soap made with grass-fed
 tallow and real Florida citrus, Tampa, FL.
 
-Static site: hand-written HTML and CSS, no build step, no dependencies. Open a
-file, edit it, reload the browser.
+Static site: hand-written HTML and CSS, with a small zero-dependency build step.
+`node build.js` stitches the sources in `src/` into flat HTML files in `_site/`,
+which is what gets deployed. Nothing is installed, and the output has no runtime
+dependency on the script — it is plain static files.
 
 ## Structure
 
 ```
-index.html                             Markup for the single page
+build.js                               The build: src/ -> _site/
+package.json                           No dependencies; `npm run build`
+src/
+  index.html                           Homepage — hero, story, 3-bar teaser, ethos
+  shop.html                            Shop page — the full catalogue
+  data/
+    products.json                      Every bar: copy, price, art, status
+  partials/
+    head.html                            <head> contents
+    header.html                          Nav, shared by both pages
+    footer.html                          Footer, shared by both pages
+    card.html                            One product card
+_site/                                 Build output — git-ignored, deployed
 assets/
   css/
     site.css                           All styles, shared by every page
   illustrations/                       Watercolor art, as served
     orange-branch.webp                   Our Story arch
+    lemongrass-mint-illustration.webp    Product card art
     blood-orange-illustration.webp       Product card art
     key-lime-illustration.webp           Product card art
     orange-blossom-illustration.webp     Product card art
+    bahiagrass-illustration.webp         Product card art (Bare)
     orange-icon.webp                     "What Goes In The Pot" medallion
     cow-icon.webp                        "What Goes In The Pot" medallion
     hand-soap-icon.webp                  "What Goes In The Pot" medallion (see below)
@@ -32,9 +48,74 @@ images/
 ```
 
 The styles live in `assets/css/site.css` rather than a `<style>` block so that
-pages added later share one stylesheet instead of each carrying a copy, and so
-a visitor moving between pages gets it from cache. Section comments in that file
+both pages share one stylesheet instead of each carrying a copy, and so a
+visitor moving between them gets it from cache. Section comments in that file
 mirror the order of the sections on the page.
+
+`assets/` and `images/` stay at the repo root rather than moving under `src/`.
+They are served verbatim, so the build just copies them across; relocating them
+would rewrite the path of every binary in git history for no benefit.
+
+### The build
+
+Three placeholder forms, resolved in this order so that a partial's own
+placeholders are filled by whichever page pulled it in:
+
+| Form | Does |
+| --- | --- |
+| `{{> name }}` | include `src/partials/name.html` |
+| `{{{ name }}}` | substitute raw HTML, for values that are already markup |
+| `{{ name }}` | substitute an HTML-escaped value |
+
+An unknown partial or variable fails the build rather than emitting an empty
+string — a silently blank nav is exactly the sort of thing that reaches
+production.
+
+Each page opens with a JSON block inside an HTML comment, which keeps the file
+valid HTML that an editor still highlights:
+
+```html
+<!--page
+{
+  "title": "Casa de Cosecha — Small-batch soap",
+  "products": ["lemongrass-mint", "blood-orange-zest", "bare"]
+}
+-->
+```
+
+`products` is that page's own curation: an ordered list of slugs, or `"all"`.
+Keeping the list here rather than flagging products in `products.json` means the
+page controls both membership *and* order, and a product record stays a
+description of the soap rather than a record of where it is marketed.
+`eagerImages: n` drops `loading="lazy"` from the first n cards, which the shop
+page uses because its first row is above the fold.
+
+The build validates as it goes and exits non-zero on: a missing required field,
+a `status` outside the known set, a duplicate slug, a page listing a slug that
+does not exist, or a product pointing at an image file that is not there. That
+last one turns a renamed illustration into a failed build instead of a broken
+image in production.
+
+`status` is on every product and reaches the markup as `data-status`, but
+nothing renders differently yet. It exists so that a later "coming soon" or
+"sold out" treatment is pure CSS — `.card[data-status="sold-out"] { … }` — with
+no change to the data or the template.
+
+### Pages are flat, and that is deliberate
+
+Both pages land at the output root: `index.html` and `shop.html`, not
+`shop/index.html`. GitHub Pages serves this repo from a **subpath**
+(`/casa-de-cosecha-website/`, since there is no custom domain), which rules out
+root-relative `/assets/...` — that would resolve outside the site entirely. Flat
+output keeps every asset path in the templates relative, identical on both
+pages, and correct under a subpath. Putting the shop page one directory down
+would need a per-page depth prefix on every single asset URL.
+
+The one thing that does vary is the nav. `#story` and `#ethos` only exist on the
+homepage, so `build.js` gives the shared header partial a `home` variable —
+empty on the homepage (a plain in-page scroll, as before) and `index.html`
+elsewhere. Without it those two nav links would silently do nothing on the shop
+page.
 
 ### Images
 
@@ -46,10 +127,20 @@ committing them would put them in history permanently. They exist only on the
 machine that made them, so back them up somewhere. If you'd rather version them,
 drop the `assets/originals/` line from `.gitignore` and consider Git LFS.
 
-Resolution is deliberate, not arbitrary. The product illustrations stay at their
+Resolution is deliberate, not arbitrary. The three citrus scans stay at their
 native 1408x768 because the card crops to the centre square — that discards 45%
 of the width, so the panel only gets ~2.1x pixel density at desktop size and
 there is no room to shrink them. They are encoded lossy at quality 92.
+
+The two botanical illustrations are square instead, at 940x940 and quality 86,
+because their sources were square to begin with and the card crops nothing.
+Neither ships as generated. `lemongrass-mint` was a plant on flat white carrying
+faint paper tone *only inside its subject's bounding box*, which rendered as a
+hard rectangle floating in the panel; it is cropped to subject, flattened to
+clean white, and composited onto the card-stock colour. `bahiagrass` was a
+full-bleed scan on much cooler paper than the citrus ones, so it is blended 70%
+toward `--paper`. Re-exporting either from its master without redoing that will
+put a cold rectangle back in the middle of a warm card.
 
 There are two brand marks, and they are encoded by different rules:
 
@@ -129,43 +220,74 @@ naive nearest-colour swap fringes every motif.
 
 ## Local preview
 
-Any static file server works. From the project root:
+Build first, then serve the output. From the project root:
 
 ```
-python -m http.server 8899
+node build.js
+python -m http.server 8899 --directory _site
 ```
 
 Then open http://127.0.0.1:8899/.
 
-Opening `index.html` directly via `file://` also works for a quick look, but
-some browser extensions and tooling refuse to interact with `file://` pages,
-so the local server is the more reliable path.
+Re-run `node build.js` after editing anything under `src/`. Editing files in
+`_site/` does nothing useful — the next build deletes and rewrites the whole
+directory.
+
+Opening `_site/index.html` via `file://` works for a quick look, but some
+browser extensions and tooling refuse to interact with `file://` pages, so the
+local server is the more reliable path.
 
 ## Adding pages
 
-The site is one page today. When a second one arrives (shop, product detail,
-cart, contact, login), the first thing to decide is what to do about the header
-and footer, which would otherwise be copy-pasted into every file and drift apart.
-There are three honest options, in increasing order of cost:
+The header and footer are partials, so a new page is a new file in `src/` with
+front matter and a couple of includes:
 
-- **Accept the duplication** while the page count is small, and keep the shared
-  markup identical by editing every copy in one pass.
-- **Inject the shared chunks with a little vanilla JS** on page load. No build
-  step, but the header arrives after first paint and it costs you the
-  no-JavaScript guarantee the site currently has.
-- **Add a static site generator or template step.** Solves it properly, and
-  gives up "clone it and open a file" simplicity.
+```html
+<!--page
+{ "title": "Wholesale — Casa de Cosecha" }
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{{> head }}
+</head>
+<body>
 
-Nothing here is decided yet, deliberately — the right answer depends on whether
-the shop stays static or starts talking to a backend.
+{{> header }}
 
-Whatever comes next, `assets/css/site.css` is already shared, so new pages only
-need their own markup.
+<!-- your markup -->
+
+{{> footer }}
+
+</body>
+</html>
+```
+
+`build.js` picks up every `.html` file in `src/` automatically; there is no
+manifest to update. Add `"products": "all"` or a list of slugs if the page shows
+product cards.
+
+Two things to keep in mind. Pages must stay flat at the output root, for the
+subpath reason above. And any nav link to a homepage-only anchor needs the
+`{{ home }}` prefix, or it will quietly do nothing everywhere except the
+homepage.
+
+This was the open question in earlier versions of this file — whether to accept
+copy-pasted headers, inject them with client-side JS, or add a template step.
+The build step won: JS injection would have cost the no-JavaScript guarantee and
+flashed a missing nav, and duplication was going to compound right as the page
+count started growing. A full static site generator was more machinery than
+"substitute some strings and copy some folders" deserves.
 
 ## Deployment
 
-Pushing to `main` triggers `.github/workflows/deploy.yml`, which publishes
-the repo root to GitHub Pages via `actions/deploy-pages`.
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which sets up Node,
+runs `node build.js`, and publishes `_site/` to GitHub Pages via
+`actions/deploy-pages`. There is nothing to install, so there is no cache step
+and no lockfile.
+
+Because the build also validates the product data, a bad slug, an unknown
+status, or a missing illustration fails the deploy instead of shipping.
 
 One-time setup (already done if you're reading this after the first push):
 in the repo's **Settings → Pages**, set **Source** to **GitHub Actions**.

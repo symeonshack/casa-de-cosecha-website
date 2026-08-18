@@ -1,0 +1,13 @@
+{
+  "name": "casa-de-cosecha-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Marketing site for Casa de Cosecha. Zero-dependency build: build.js stitches src/ partials and product data into flat static HTML in _site/.",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}
