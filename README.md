@@ -96,10 +96,34 @@ does not exist, or a product pointing at an image file that is not there. That
 last one turns a renamed illustration into a failed build instead of a broken
 image in production.
 
-`status` is on every product and reaches the markup as `data-status`, but
-nothing renders differently yet. It exists so that a later "coming soon" or
-"sold out" treatment is pure CSS — `.card[data-status="sold-out"] { … }` — with
-no change to the data or the template.
+### Product status
+
+Every product carries a `status`, and it reaches the markup as `data-status` on
+the card's outermost element. The vocabulary is:
+
+| Value | Means |
+| --- | --- |
+| `available` | On sale. What all five bars are today. |
+| `coming-soon` | Announced, not yet purchasable. |
+| `sold-out` | Was purchasable, currently is not. |
+
+Nothing renders differently for any of them yet — that is deliberate. The field
+exists so the visual treatment, when it comes, is pure CSS against an attribute
+that is already in the HTML:
+
+```css
+.card[data-status="sold-out"] .price { … }
+```
+
+No change to `products.json`, no change to `card.html`, no change to `build.js`.
+The attribute sits on the outermost element of the card, so a rule can style the
+whole card or any part of it.
+
+`status` is required, not defaulted. Leaving it off fails the build rather than
+silently assuming `available`, which is the same posture as every other required
+field — and it means a typo'd key (`statu:`) surfaces immediately instead of
+quietly reading as "on sale". Adding a value to the vocabulary means adding it to
+`STATUSES` in `build.js`.
 
 ### Pages are flat, and that is deliberate
 
